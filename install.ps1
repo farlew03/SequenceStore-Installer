@@ -1,4 +1,6 @@
+:::writing{variant="document" id="84271"}
 Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
 
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "Sequence Store"
@@ -26,16 +28,17 @@ $log.Height = 300
 $log.Location = New-Object System.Drawing.Point(20,140)
 
 $button.Add_Click({
-$FiveMPath = Join-Path $env:LOCALAPPDATA "FiveM"
 
-```
-if (Test-Path $FiveMPath) {
-    $log.AppendText("[OK] พบ FiveM : $FiveMPath`r`n")
-}
-else {
-    $log.AppendText("[ERROR] ไม่พบ FiveM`r`n")
-}
-```
+    $FiveMPath = Join-Path $env:LOCALAPPDATA "FiveM"
+
+    if (Test-Path $FiveMPath)
+    {
+        $log.AppendText("[OK] พบ FiveM : $FiveMPath`r`n")
+    }
+    else
+    {
+        $log.AppendText("[ERROR] ไม่พบ FiveM`r`n")
+    }
 
 })
 
@@ -44,3 +47,4 @@ $form.Controls.Add($button)
 $form.Controls.Add($log)
 
 [void]$form.ShowDialog()
+:::
