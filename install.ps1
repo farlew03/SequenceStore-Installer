@@ -1,4 +1,3 @@
-:::writing{variant="document" id="84271"}
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
@@ -47,4 +46,4 @@ $form.Controls.Add($button)
 $form.Controls.Add($log)
 
 [void]$form.ShowDialog()
-:::
+
