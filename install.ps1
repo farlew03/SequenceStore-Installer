@@ -2,7 +2,8 @@ Add-Type -AssemblyName PresentationFramework
 
 $FiveMPath = Join-Path $env:LOCALAPPDATA "FiveM"
 
-[xml]$xaml = @" <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+[xml]$xaml = @" 
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
      Title="Sequence Store"
      Height="500"
