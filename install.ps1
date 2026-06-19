@@ -1,83 +1,46 @@
-Add-Type -AssemblyName PresentationFramework
+Add-Type -AssemblyName System.Windows.Forms
 
+$form = New-Object System.Windows.Forms.Form
+$form.Text = "Sequence Store"
+$form.Width = 800
+$form.Height = 500
+$form.StartPosition = "CenterScreen"
+
+$label = New-Object System.Windows.Forms.Label
+$label.Text = "SEQUENCE STORE"
+$label.AutoSize = $true
+$label.Font = New-Object System.Drawing.Font("Segoe UI",20,[System.Drawing.FontStyle]::Bold)
+$label.Location = New-Object System.Drawing.Point(20,20)
+
+$button = New-Object System.Windows.Forms.Button
+$button.Text = "ตรวจสอบ FiveM"
+$button.Width = 200
+$button.Height = 40
+$button.Location = New-Object System.Drawing.Point(20,80)
+
+$log = New-Object System.Windows.Forms.TextBox
+$log.Multiline = $true
+$log.ScrollBars = "Vertical"
+$log.Width = 740
+$log.Height = 300
+$log.Location = New-Object System.Drawing.Point(20,140)
+
+$button.Add_Click({
 $FiveMPath = Join-Path $env:LOCALAPPDATA "FiveM"
 
-[xml]$xaml = @" 
-<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-     Title="Sequence Store"
-     Height="500"
-     Width="800"
-     WindowStartupLocation="CenterScreen"
-     Background="#0B1220">
-
 ```
-<Grid Margin="20">
-
-    <Grid.RowDefinitions>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
-
-    <TextBlock Grid.Row="0"
-               Text="SEQUENCE STORE"
-               FontSize="30"
-               FontWeight="Bold"
-               Foreground="#4DA3FF"
-               HorizontalAlignment="Center"/>
-
-    <StackPanel Grid.Row="1" Margin="0,20,0,20">
-
-        <TextBlock Text="FiveM Path"
-                   Foreground="White"/>
-
-        <TextBox x:Name="txtPath"
-                 Height="30"/>
-
-        <Button x:Name="btnInstall"
-                Content="ติดตั้ง ReShade"
-                Height="40"
-                Margin="0,15,0,0"/>
-
-    </StackPanel>
-
-    <TextBox Grid.Row="2"
-             x:Name="txtLog"
-             AcceptsReturn="True"
-             VerticalScrollBarVisibility="Auto"
-             IsReadOnly="True"/>
-
-</Grid>
-```
-
-</Window>
-"@
-
-$reader = New-Object System.Xml.XmlNodeReader $xaml
-$window = [Windows.Markup.XamlReader]::Load($reader)
-
-$txtPath = $window.FindName("txtPath")
-$txtLog = $window.FindName("txtLog")
-$btnInstall = $window.FindName("btnInstall")
-
-$txtPath.Text = $FiveMPath
-
-$btnInstall.Add_Click({
-
-```
-$txtLog.AppendText("Sequence Store Installer`r`n")
-
-if (Test-Path $txtPath.Text)
-{
-    $txtLog.AppendText("[OK] พบ FiveM`r`n")
+if (Test-Path $FiveMPath) {
+    $log.AppendText("[OK] พบ FiveM : $FiveMPath`r`n")
 }
-else
-{
-    $txtLog.AppendText("[ERROR] ไม่พบ FiveM`r`n")
+else {
+    $log.AppendText("[ERROR] ไม่พบ FiveM`r`n")
 }
 ```
 
 })
 
-$null = $window.ShowDialog()
+$form.Controls.Add($label)
+$form.Controls.Add($button)
+$form.Controls.Add($log)
+
+[void]$form.ShowDialog()
