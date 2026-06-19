@@ -2,11 +2,11 @@ Add-Type -AssemblyName PresentationFramework
 
 $FiveMPath = Join-Path $env:LOCALAPPDATA "FiveM"
 
-[xml]$xaml = @" 
-<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+[xml]$xaml = @" <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
      Title="Sequence Store"
-     Width="900"
-     Height="600"
+     Height="500"
+     Width="800"
      WindowStartupLocation="CenterScreen"
      Background="#0B1220">
 
@@ -19,35 +19,33 @@ $FiveMPath = Join-Path $env:LOCALAPPDATA "FiveM"
         <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
 
-    <TextBlock Text="SEQUENCE STORE"
-               FontSize="32"
+    <TextBlock Grid.Row="0"
+               Text="SEQUENCE STORE"
+               FontSize="30"
                FontWeight="Bold"
-               Foreground="DodgerBlue"/>
+               Foreground="#4DA3FF"
+               HorizontalAlignment="Center"/>
 
-    <StackPanel Grid.Row="1" Margin="0,20,0,0">
+    <StackPanel Grid.Row="1" Margin="0,20,0,20">
 
         <TextBlock Text="FiveM Path"
                    Foreground="White"/>
 
-        <TextBox Name="txtPath"
-                 Height="35"/>
+        <TextBox x:Name="txtPath"
+                 Height="30"/>
+
+        <Button x:Name="btnInstall"
+                Content="ติดตั้ง ReShade"
+                Height="40"
+                Margin="0,15,0,0"/>
 
     </StackPanel>
 
-    <StackPanel Grid.Row="2"
-                Margin="0,20,0,0">
-
-        <Button Name="btnInstall"
-                Height="45"
-                Content="ติดตั้ง ReShade"/>
-
-        <TextBox Name="txtLog"
-                 Margin="0,15,0,0"
-                 AcceptsReturn="True"
-                 VerticalScrollBarVisibility="Auto"
-                 Height="250"/>
-
-    </StackPanel>
+    <TextBox Grid.Row="2"
+             x:Name="txtLog"
+             AcceptsReturn="True"
+             VerticalScrollBarVisibility="Auto"
+             IsReadOnly="True"/>
 
 </Grid>
 ```
@@ -69,7 +67,7 @@ $btnInstall.Add_Click({
 ```
 $txtLog.AppendText("Sequence Store Installer`r`n")
 
-if(Test-Path $txtPath.Text)
+if (Test-Path $txtPath.Text)
 {
     $txtLog.AppendText("[OK] พบ FiveM`r`n")
 }
@@ -81,4 +79,4 @@ else
 
 })
 
-$window.ShowDialog()
+$null = $window.ShowDialog()
